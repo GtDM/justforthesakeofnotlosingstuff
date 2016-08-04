@@ -18,6 +18,7 @@ class PhysicsEngine
         void processMovement(std::vector <sf::RectangleShape> surface);
         sf::Clock clock;
         std::vector <Entity*> _entitylist;
+        int framerate;
     protected:
     private:
         sf::Vector2i _size;

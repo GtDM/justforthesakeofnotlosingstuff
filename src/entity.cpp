@@ -8,10 +8,10 @@ Entity::Entity(PhysicsEngine* p)
     this->_priority_number = 1; ///TODO priority_number that matters, first one is player
     p->addEntity(this);
     Ability nothing(1);
-    Ability jump(10, [this](){_forces.push_back(Force(0, -1, sf::milliseconds(5)));});
-    Ability walk_left(10, [this](){_forces.push_back(Force(-0.33f, 0, sf::milliseconds(1)));});
+    Ability jump(10, [this](){_forces.push_back(Force(0, -10));});
+    Ability walk_left(10, [this](){_forces.push_back(Force(-1, 0));});
     walk_left.activate();
-    Ability walk_right(10, [this](){_forces.push_back(Force(0.33f, 0, sf::milliseconds(1)));});
+    Ability walk_right(10, [this](){_forces.push_back(Force(1, 0));});
     walk_right.activate();
     _skillz.push_back(jump);
     _skillz.push_back(walk_left);

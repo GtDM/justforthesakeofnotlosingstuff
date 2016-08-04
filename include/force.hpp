@@ -7,16 +7,15 @@
 class Force: public sf::Vector2f
 {
     public:
-        Force(float x, float y){this->x = x; this->y = y; totalDuration = sf::milliseconds(1);  timeleft = sf::milliseconds(1);}
-        Force(float x, float y, sf::Time d){this->x = x; this->y = y; totalDuration = d; timeleft = d;}
+        Force(float x, float y, int d = 4){this->x = x; this->y = y; totalDuration = d; timeleft = d;}
         ~Force(){}
-        sf::Time getTimeLeft(){return timeleft;}
-        sf::Time getDuration(){return totalDuration;}
-        void removeTime(sf::Time delta_t){timeleft -= delta_t;}
+        int getTimeLeft(){return timeleft;}
+        int getDuration(){return totalDuration;}
+        void removeTime(int delta_t){timeleft -= delta_t;}
     protected:
     private:
-        sf::Time timeleft;
-        sf::Time totalDuration; ///TODO totalDuration should be constant
+        int timeleft;
+        int totalDuration; ///TODO totalDuration should be constant
 };
 
 #endif // FORCE_HPP

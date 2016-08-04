@@ -21,7 +21,7 @@ class Ability
     protected:
 
     private:
-        int cooldown; ///TODO All in sf::Time or in number of frames or something and working
+        int cooldown;
         bool available;
 };
 

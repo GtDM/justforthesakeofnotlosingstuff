@@ -9,6 +9,7 @@
 #include <physicsengine.hpp>
 #include <iostream>
 #include <level.hpp>
+#include <sstream>
 
 class Game
 {
@@ -17,8 +18,8 @@ class Game
         ~Game();
         bool isRunning(){return _state;}
         void draw();
-        void sing(); ///TODO Let's sing a song, it won't take long
-        void think(); ///TODO Bug: Sometimes player disappears
+        void sing();
+        void think(); ///TODO Bug: Sometimes player disappears and game sometimes crashes, related to movement
         sf::Vector2i _size;
     protected:
 
@@ -27,6 +28,8 @@ class Game
         sf::Event _event;
         sf::RenderWindow _window;
         //sf::Clock clock; Might be used for animations, bullets and forces
+        sf::Text frameRate; ///Stolen legally with author's permission
+        sf::Font font;
         PhysicsEngine* _engine;
         Entity* _default_player;
         Level* _level;

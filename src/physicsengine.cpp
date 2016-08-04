@@ -17,7 +17,7 @@ void PhysicsEngine::addEntity(Entity* e)
 
 void PhysicsEngine::processGravity(Entity* entity)
 {
-    entity->_forces.push_back(Force(0, 0.25f, sf::milliseconds(1)));
+    entity->_forces.push_back(Force(0, 1, 3));
 }
 void PhysicsEngine::processMovement(std::vector <sf::RectangleShape> surfaces)
 {
@@ -84,19 +84,18 @@ void PhysicsEngine::processMovement(std::vector <sf::RectangleShape> surfaces)
                 else std::cout << y.getFillColor().r << " " << y.getFillColor().g << " " << y.getFillColor().b << "\n";
             }
         }
-        for(std::vector<Force>::iterator it = x->_forces.begin(); it != x->_forces.end() && !x->_forces.empty(); it++)
+        for(std::vector<Force>::iterator it = x->_forces.begin(); it != x->_forces.end() && !x->_forces.empty();)
         {
-            if(it->getTimeLeft().asMilliseconds() <= 0)
+            if(it->getTimeLeft() <= 0)
             {
-                it++;
-                x->_forces.erase(it-1);
-                it--;
+                x->_forces.erase(it++);
             }
             else
             {
-                it->removeTime(clock.getElapsedTime());
+                it->removeTime(1);
                 finalVector.x += it->x;
                 finalVector.y += it->y;
+                it++;
             }
         }
         if(!i)

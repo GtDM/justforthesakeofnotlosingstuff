@@ -13,7 +13,7 @@ Level::~Level()
     //dtor
 }
 
-void Level::constructVertexArrays(sf::RenderWindow* window) ///TODO Doesn't work properly, should be replaced with different one
+void Level::constructVertexArrays(sf::RenderWindow* window) ///TODO needs improvement
 {
     for(int x = 0; x != 32; x++) ///Temporary size
     {

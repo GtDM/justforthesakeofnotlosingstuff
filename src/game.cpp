@@ -3,6 +3,7 @@
 Game::Game(Entity* player, PhysicsEngine* engine, Level* level, int size_x, int size_y, std::string version)
 {
     _window.create(sf::VideoMode(size_x, size_y), version);
+    _window.setFramerateLimit(60);
     _state = true;
     _engine = engine;
     _default_player = player;
@@ -10,6 +11,11 @@ Game::Game(Entity* player, PhysicsEngine* engine, Level* level, int size_x, int 
     _size.y = size_y;
     _level = level;
     _level->constructVertexArrays(&_window);
+    font.loadFromFile("data/under.ttf");
+    frameRate.setFont(font);
+    frameRate.setCharacterSize(100);
+	frameRate.setPosition(20, 60);
+	frameRate.setColor(sf::Color::White);
 }
 
 Game::~Game()
@@ -24,15 +30,13 @@ void Game::sing()
 
 void Game::think()
 {
+    static sf::Clock clock; /// Magiczny zegar SFMLa...
+	int fps = round(1.0f / clock.restart().asSeconds()); /// ...liczy FPSy.
+	_engine->framerate = fps;
+	std::stringstream ss; /// Magiczny strumień ciągów znaków...
+	ss << "FPS: " << fps; /// ...łączy liczbę FPSów z napisem "FPS"...
+	frameRate.setString(ss.str()); /// ...i aktualizuje globalną zmienną, wyświetlaną magicznie w draw()...
     _engine->clock.restart(); ///equals roughly 300-600 microseconds
-    /*if(_window.pollEvent(_event))
-    {
-        if(_event.type == sf::Event::Closed)
-        {
-            _window.close();
-            _state = false;
-        }
-    }*/
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
         _window.close();
@@ -40,7 +44,6 @@ void Game::think()
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && _default_player->_skillz[0].isAvailable())
     {
-        //_default_player->_forces.push_back(Force(0, -8, sf::milliseconds(5))); ///TODO Adjust forces while not making too many of them
         _default_player->_skillz[0].invoke(); ///JUST TO SHOW THAT IT IS COOL, NOT WORTH IT BEFORE…
         _default_player->_skillz[0].deactivate(); ///TODO Working cooldowns in abilities
     }
@@ -68,5 +71,6 @@ void Game::draw()
     _window.draw(*_level);
     for(auto &x : _engine->_entitylist)
         _window.draw(*x);
+    _window.draw(frameRate);
     _window.display();
 }

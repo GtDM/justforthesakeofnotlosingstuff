@@ -10,10 +10,10 @@ using namespace sf;
 2. ENTITIES AND PROCESSING THEM
 3. SKILL TREE AND ZE SKILLZ
 4. EXPERIENCE AND HUD
+5. MUST BE DE MUSIK
 **/
 
 ///TODO Alles dependent on fps
-///TODO Bug: Game crashes, can't reproduce in debug mode, related to movement
 //1. MAP - Done in some sense
 
 int main(int argc, char** argv)
