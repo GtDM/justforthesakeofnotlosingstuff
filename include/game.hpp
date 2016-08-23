@@ -14,7 +14,7 @@
 class Game
 {
     public:
-        Game(Entity* player, PhysicsEngine* engine, Level* level, int size_x, int size_y, std::string version);
+        Game(Entity* player, Entity* npc, PhysicsEngine* engine, Level* level, int size_x, int size_y, std::string version);
         ~Game();
         bool isRunning(){return _state;}
         void draw();
@@ -25,14 +25,13 @@ class Game
 
     private:
         bool _state;
-        sf::Event _event;
         sf::RenderWindow _window;
-        //sf::Clock clock; Might be used for animations, bullets and forces
         sf::Text frameRate; ///Stolen legally with author's permission
         sf::Font font;
         PhysicsEngine* _engine;
         Entity* _default_player;
         Level* _level;
+        Entity* _npc;
 };
 
 #endif // GAME_HPP

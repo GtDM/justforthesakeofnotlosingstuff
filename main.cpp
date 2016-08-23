@@ -19,14 +19,18 @@ using namespace sf;
 int main(int argc, char** argv)
 {
     PhysicsEngine engine(sf::Vector2i(SIZE_X, SIZE_Y));
-    Entity player(&engine);
+    //std::vector <Ability> default_skillset;
+    Entity player(&engine, sf::Color::Red);
+    //player.learnSkills(default_skillset);
+    Entity npc(&engine, sf::Color::Blue);
     Level default_map("data/somemap.png", SIZE_X);
-    Game g(&player, &engine, &default_map, SIZE_X, SIZE_Y, VERSION);
+    Game g(&player, &npc, &engine, &default_map, SIZE_X, SIZE_Y, VERSION);
     while (g.isRunning())
     {
         g.think();
         g.draw();
     }
+    asm("NOP"); ///It works!
     return 0;
 }
 

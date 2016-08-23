@@ -8,16 +8,14 @@
 class Ability
 {
     public:
-        Ability(int c, std::function <void()> i = [](){std::cout << "One does not simply invoke an ability, that one doesn't have\n";}){cooldown = c; invoke = i;}
+        Ability(int c, std::function <void()> i = [](){std::cout << "One does not simply invoke an ability, that one doesn't have\n";}): invoke(i), cooldown(c){}
         ~Ability(){}
-
+        void setCooldown(int c){ cooldown = c;}
         int getCooldown() { return cooldown; }
-        void setCooldown(int val) { cooldown = val; }
         bool isAvailable(){return available;}
         void activate(){available = true;}
         void deactivate(){available = false;}
         std::function <void()> invoke;
-
     protected:
 
     private:

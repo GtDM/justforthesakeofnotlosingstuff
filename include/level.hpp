@@ -5,6 +5,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <vector>
+#include <surface.hpp>
 
 class Level: public sf::Sprite
 {
@@ -12,7 +13,7 @@ class Level: public sf::Sprite
         Level(std::string minimap_directory, int size_x);
         ~Level();
         void constructVertexArrays(sf::RenderWindow* window);
-        std::vector<sf::RectangleShape> visibleMap; ///TODO Custom class for surfaces or whatever it should be called
+        std::vector<Surface> visibleMap; ///TODO Custom class for surfaces or whatever it should be called
     protected:
 
     private:

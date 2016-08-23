@@ -4,13 +4,13 @@
 	<Project>
 		<Option title="Holiday Game in SFML" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc" />
+		<Option compiler="clang" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/Holiday Game in SFML" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
-				<Option compiler="gcc" />
+				<Option compiler="clang" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
@@ -25,7 +25,7 @@
 				<Option output="bin/Release/Holiday Game in SFML" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
-				<Option compiler="gcc" />
+				<Option compiler="clang" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add directory="include" />
@@ -40,8 +40,11 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-std=c++14" />
+			<Add option="-m64" />
 		</Compiler>
 		<Linker>
+			<Add option="-m64" />
 			<Add library="sfml-system" />
 			<Add library="sfml-window" />
 			<Add library="sfml-graphics" />
@@ -53,11 +56,13 @@
 		<Unit filename="include/game.hpp" />
 		<Unit filename="include/level.hpp" />
 		<Unit filename="include/physicsengine.hpp" />
+		<Unit filename="include/surface.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/entity.cpp" />
 		<Unit filename="src/game.cpp" />
 		<Unit filename="src/level.cpp" />
 		<Unit filename="src/physicsengine.cpp" />
+		<Unit filename="src/surface.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

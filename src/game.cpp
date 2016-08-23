@@ -1,12 +1,13 @@
 #include "game.hpp"
 
-Game::Game(Entity* player, PhysicsEngine* engine, Level* level, int size_x, int size_y, std::string version)
+Game::Game(Entity* player, Entity* npc, PhysicsEngine* engine, Level* level, int size_x, int size_y, std::string version)
 {
     _window.create(sf::VideoMode(size_x, size_y), version);
     _window.setFramerateLimit(60);
     _state = true;
     _engine = engine;
     _default_player = player;
+    _npc = npc;
     _size.x = size_x;
     _size.y = size_y;
     _level = level;
@@ -15,7 +16,7 @@ Game::Game(Entity* player, PhysicsEngine* engine, Level* level, int size_x, int 
     frameRate.setFont(font);
     frameRate.setCharacterSize(100);
 	frameRate.setPosition(20, 60);
-	frameRate.setColor(sf::Color::White);
+	frameRate.setFillColor(sf::Color::White);
 }
 
 Game::~Game()
@@ -37,6 +38,10 @@ void Game::think()
 	ss << "FPS: " << fps; /// ...łączy liczbę FPSów z napisem "FPS"...
 	frameRate.setString(ss.str()); /// ...i aktualizuje globalną zmienną, wyświetlaną magicznie w draw()...
     _engine->clock.restart(); ///equals roughly 300-600 microseconds
+    for(auto &entity : _engine->_entitylist)
+    {
+        entity->finalVector = sf::Vector2f(0, 0);
+    }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
         _window.close();
@@ -55,12 +60,18 @@ void Game::think()
     {
         _default_player->_skillz[2].invoke();
     }
-    /*if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        _default_player->_forces.push_back(Force(0, 0.33f, sf::milliseconds(1)));
-    }*/
+        _default_player->_forces.push_back(Force(0, 2, 1));
+    }
     //std::cout << _default_player->getPosition().y << " " << _default_player->getPosition().x << "\n";
-    _engine->processMovement(_level->visibleMap);
+    for(auto &entity : _engine->_entitylist)
+    {
+        _engine->updateFinalVector(entity);
+        _engine->processCollision(_level->visibleMap, entity);
+        entity->move(entity->finalVector);
+        _engine->correctPosition(entity);
+    }
 }
 
 void Game::draw()

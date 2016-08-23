@@ -12,13 +12,15 @@ class PhysicsEngine;
 class Entity: public sf::RectangleShape
 {
     public:
-        Entity(PhysicsEngine* p);
+        Entity(PhysicsEngine* p, sf::Color c);
         Entity();
         ~Entity();
         int getPriority(){return _priority_number;}
         void setPriority(int priority){_priority_number=priority;}
         std::vector <Force> _forces; ///TODO a lot of things should be private
         std::vector <Ability> _skillz;
+        void learnSkills(std::vector <Ability> skillset);
+        sf::Vector2f finalVector;
     protected:
     private:
         int _priority_number;

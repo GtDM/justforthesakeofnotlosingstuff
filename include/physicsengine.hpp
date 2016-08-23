@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <cmath>
+#include "surface.hpp"
 
 class Entity;
 
@@ -14,8 +15,10 @@ class PhysicsEngine
         PhysicsEngine(sf::Vector2i size);
         ~PhysicsEngine();
         void processGravity(Entity* entity); ///TODO gravity changes depending on level or gravity sources
-        void addEntity(Entity* e);
-        void processMovement(std::vector <sf::RectangleShape> surface);
+        void addEntity(Entity* entity);
+        void updateFinalVector(Entity* entity);
+        void processCollision(std::vector <Surface> surfaces, Entity* entity);
+        void correctPosition(Entity* entity);
         sf::Clock clock;
         std::vector <Entity*> _entitylist;
         int framerate;

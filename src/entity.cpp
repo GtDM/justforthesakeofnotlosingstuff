@@ -1,13 +1,14 @@
 #include "entity.hpp"
 
-Entity::Entity(PhysicsEngine* p)
+Entity::Entity(PhysicsEngine* p, sf::Color c)
 {
     setPosition(0, 0);
-    this->setFillColor(sf::Color::Red);
+    this->setFillColor(c);
     this->setSize(sf::Vector2f(20, 20));
+    this->setPosition(sf::Vector2f(100, 0));
     this->_priority_number = 1; ///TODO priority_number that matters, first one is player
     p->addEntity(this);
-    Ability nothing(1);
+    Ability nothing(1); ///TODO TEMP START
     Ability jump(10, [this](){_forces.push_back(Force(0, -10));});
     Ability walk_left(10, [this](){_forces.push_back(Force(-1, 0));});
     walk_left.activate();
@@ -16,7 +17,7 @@ Entity::Entity(PhysicsEngine* p)
     _skillz.push_back(jump);
     _skillz.push_back(walk_left);
     _skillz.push_back(walk_right);
-    _skillz.push_back(nothing);
+    _skillz.push_back(nothing); ///TODO TEMP END
 }
 
 Entity::Entity()
@@ -30,4 +31,9 @@ Entity::Entity()
 Entity::~Entity()
 {
     //dtor
+}
+
+void Entity::learnSkills(std::vector <Ability> skillset)
+{
+    _skillz = skillset;
 }
