@@ -42,7 +42,7 @@ void Game::think()
     {
         entity->finalVector = sf::Vector2f(0, 0);
         for(auto s : entity->_skillz)
-            s.reset();
+            s.second.reset();
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
@@ -51,16 +51,16 @@ void Game::think()
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        _default_player->_skillz[0].invoke(); ///JUST TO SHOW THAT IT IS COOL, NOT WORTH IT BEFORE…
-        _default_player->_skillz[0].deactivate(); ///TODO Working cooldowns in abilities
+        _default_player->_skillz["jump"].invoke(); ///JUST TO SHOW THAT IT IS COOL, NOT WORTH IT BEFORE…
+        _default_player->_skillz["jump"].deactivate(); ///TODO Working cooldowns in abilities
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) ///TODO Availability check in Ability
     {
-        _default_player->_skillz[1].invoke();
+        _default_player->_skillz["walk left"].invoke();
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        _default_player->_skillz[2].invoke();
+        _default_player->_skillz["walk right"].invoke();
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {

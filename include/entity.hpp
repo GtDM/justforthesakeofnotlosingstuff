@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <unordered_map>
 #include "physicsengine.hpp"
 #include "force.hpp"
 #include "ability.hpp"
@@ -18,14 +19,14 @@ class Entity: public sf::RectangleShape
         int getPriority(){return _priority_number;}
         void setPriority(int priority){_priority_number=priority;}
         std::vector <Force> _forces; ///TODO a lot of things should be private
-        std::vector <Ability> _skillz;
-        void learnSkills(std::vector <Ability> skillset);
+        std::unordered_map <std::string, Ability> _skillz;
+        void learnSkills(std::unordered_map <std::string, Ability> skillset);
         sf::Vector2f finalVector;
     protected:
     private:
         int _priority_number;
-        int _life;
-        int _mana;
+        //int _life;
+        //int _mana;
 };
 
 #endif // ENTITY_HPP
