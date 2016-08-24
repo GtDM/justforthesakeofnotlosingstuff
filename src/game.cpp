@@ -41,22 +41,24 @@ void Game::think()
     for(auto &entity : _engine->_entitylist)
     {
         entity->finalVector = sf::Vector2f(0, 0);
+        for(auto s : entity->_skillz)
+            s.reset();
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
         _window.close();
         _state = false;
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && _default_player->_skillz[0].isAvailable())
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
         _default_player->_skillz[0].invoke(); ///JUST TO SHOW THAT IT IS COOL, NOT WORTH IT BEFORE…
         _default_player->_skillz[0].deactivate(); ///TODO Working cooldowns in abilities
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && _default_player->_skillz[1].isAvailable()) ///TODO Availability check in Ability
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) ///TODO Availability check in Ability
     {
         _default_player->_skillz[1].invoke();
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && _default_player->_skillz[2].isAvailable())
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         _default_player->_skillz[2].invoke();
     }
@@ -64,13 +66,11 @@ void Game::think()
     {
         _default_player->_forces.push_back(Force(0, 2, 1));
     }
-    //std::cout << _default_player->getPosition().y << " " << _default_player->getPosition().x << "\n";
     for(auto &entity : _engine->_entitylist)
     {
         _engine->updateFinalVector(entity);
         _engine->processCollision(_level->visibleMap, entity);
         entity->move(entity->finalVector);
-        _engine->correctPosition(entity);
     }
 }
 

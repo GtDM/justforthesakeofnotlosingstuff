@@ -18,7 +18,6 @@ class PhysicsEngine
         void addEntity(Entity* entity);
         void updateFinalVector(Entity* entity);
         void processCollision(std::vector <Surface> surfaces, Entity* entity);
-        void correctPosition(Entity* entity);
         sf::Clock clock;
         std::vector <Entity*> _entitylist;
         int framerate;

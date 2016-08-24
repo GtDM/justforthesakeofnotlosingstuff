@@ -58,6 +58,7 @@ void PhysicsEngine::processCollision(std::vector <Surface> surfaces, Entity* ent
                     entity->_skillz[2].activate();
                     if(entity->finalVector.y < 0)
                         entity->finalVector.y = 0;
+                    entity->setPosition(entity->getPosition().x, entity->getPosition().y + 0.25 * intersection.height);
                 }
                 else
                 {
@@ -67,6 +68,7 @@ void PhysicsEngine::processCollision(std::vector <Surface> surfaces, Entity* ent
                     entity->_skillz[2].activate();
                     if(entity->finalVector.y > 0)
                         entity->finalVector.y = 0;
+                    entity->setPosition(entity->getPosition().x, entity->getPosition().y - 0.25 * intersection.height);
                 }
             }
             else
@@ -78,6 +80,7 @@ void PhysicsEngine::processCollision(std::vector <Surface> surfaces, Entity* ent
                     entity->_skillz[2].deactivate();
                     if(entity->finalVector.x > 0)
                         entity->finalVector.x = 0;
+                    entity->setPosition(entity->getPosition().x - 0.25 * intersection.width, entity->getPosition().y);
                 }
                 else
                 {
@@ -86,6 +89,7 @@ void PhysicsEngine::processCollision(std::vector <Surface> surfaces, Entity* ent
                     entity->_skillz[2].activate();
                     if(entity->finalVector.x < 0)
                         entity->finalVector.x = 0;
+                    entity->setPosition(entity->getPosition().x + 0.25 * intersection.width, entity->getPosition().y);
                 }
             }
         }
@@ -96,9 +100,4 @@ void PhysicsEngine::processCollision(std::vector <Surface> surfaces, Entity* ent
         entity->_skillz[2].activate();
     }
 
-}
-
-void PhysicsEngine::correctPosition(Entity* entity)
-{
-    ///TODO write this function
 }
