@@ -44,28 +44,7 @@ void Game::think()
         for(auto s : entity->_skillz)
             s.second.reset();
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-    {
-        _window.close();
-        _state = false;
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-    {
-        _default_player->_skillz["jump"].invoke(); ///JUST TO SHOW THAT IT IS COOL, NOT WORTH IT BEFORE…
-        _default_player->_skillz["jump"].deactivate(); ///TODO Working cooldowns in abilities
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)) ///TODO Availability check in Ability
-    {
-        _default_player->_skillz["walk left"].invoke();
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-    {
-        _default_player->_skillz["walk right"].invoke();
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-    {
-        _default_player->_forces.push_back(Force(0, 2, 1));
-    }
+    handleKeyboard();
     for(auto &entity : _engine->_entitylist)
     {
         _engine->updateFinalVector(entity);
@@ -84,4 +63,31 @@ void Game::draw()
         _window.draw(*x);
     _window.draw(frameRate);
     _window.display();
+}
+
+void Game::handleKeyboard()
+{
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+    {
+        _window.close();
+        _state = false;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    {
+        _default_player->_skillz["jump"].invoke();
+        _default_player->_skillz["jump"].deactivate(); ///TODO Working cooldowns in abilities
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        _default_player->_skillz["walk left"].invoke();
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+    {
+        _default_player->_skillz["walk right"].invoke();
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+    {
+        //_default_player->_forces.push_back(Force(0, 2, 1));
+        //_default_player->_skillz["do nothing"].invoke();
+    }
 }

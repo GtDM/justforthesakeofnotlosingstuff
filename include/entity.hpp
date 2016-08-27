@@ -13,15 +13,17 @@ class PhysicsEngine;
 class Entity: public sf::RectangleShape
 {
     public:
-        Entity(PhysicsEngine* p, sf::Color c);
+        Entity(PhysicsEngine* p, sf::Color c, int priority, sf::Vector2f position);
         Entity();
         ~Entity();
         int getPriority(){return _priority_number;}
         void setPriority(int priority){_priority_number=priority;}
         std::vector <Force> _forces; ///TODO a lot of things should be private
-        std::unordered_map <std::string, Ability> _skillz;
-        void learnSkills(std::unordered_map <std::string, Ability> skillset);
+        AbilityMap _skillz;
+        void learnSkills(AbilityMap skillset);
         sf::Vector2f finalVector;
+        //void removeForce(std::iterator <Force> it);
+        void addForce(Force force);
     protected:
     private:
         int _priority_number;

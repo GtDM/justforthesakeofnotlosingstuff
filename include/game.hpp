@@ -32,6 +32,7 @@ class Game
         Entity* _default_player;
         Level* _level;
         Entity* _npc;
+        void handleKeyboard();
 };
 
 #endif // GAME_HPP

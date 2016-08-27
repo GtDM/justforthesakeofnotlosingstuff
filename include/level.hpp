@@ -10,15 +10,16 @@
 class Level: public sf::Sprite
 {
     public:
-        Level(std::string minimap_directory, int size_x);
+        Level(std::string minimap_directory, int size_x, sf::Vector2f internal_size);
         ~Level();
         void constructVertexArrays(sf::RenderWindow* window);
-        std::vector<Surface> visibleMap; ///TODO Custom class for surfaces or whatever it should be called
+        std::vector<Surface> visibleMap;
     protected:
 
     private:
         sf::Image minimap;
         sf::Texture minimap_tex;
+        sf::Vector2f _size;
 };
 
 #endif // LEVEL_HPP

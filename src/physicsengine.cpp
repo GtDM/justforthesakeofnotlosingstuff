@@ -17,7 +17,7 @@ void PhysicsEngine::addEntity(Entity* e)
 
 void PhysicsEngine::processGravity(Entity* entity)
 {
-    entity->_forces.push_back(Force(0, 3, 1));
+    entity->addForce(Force(0, 3, 1));
 }
 void PhysicsEngine::updateFinalVector(Entity* entity)
 {
