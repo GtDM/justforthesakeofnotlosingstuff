@@ -1,13 +1,11 @@
 #include "game.hpp"
 
-Game::Game(Entity* player, Entity* npc, PhysicsEngine* engine, Level* level, int size_x, int size_y, std::string version)
+Game::Game(PhysicsEngine* engine, Level* level, int size_x, int size_y, std::string version)
 {
     _window.create(sf::VideoMode(size_x, size_y), version);
     _window.setFramerateLimit(60);
     _state = true;
     _engine = engine;
-    _default_player = player;
-    _npc = npc;
     _size.x = size_x;
     _size.y = size_y;
     _level = level;
@@ -51,6 +49,17 @@ void Game::think()
         _engine->processCollision(_level->visibleMap, entity);
         entity->move(entity->finalVector);
     }
+    if(_level->victoryCondition(_engine))
+    {
+        ///Some applause
+        std::cout << "Congratulations!\n You have won ze game.\n But unfortunately you missed a party, because you are drunk\nGG\n";
+        this->_state = false;
+    }
+    if(_level->failureCondition(_engine))
+    {
+        std::cout << "No cake for you, dummy\n You are dead\n But you might show up on a party celebrating some hero (not you, of course)\n Good day, sir\n";
+        this->_state = false;
+    }
 }
 
 void Game::draw()
@@ -74,20 +83,34 @@ void Game::handleKeyboard()
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
-        _default_player->_skillz["jump"].invoke();
-        _default_player->_skillz["jump"].deactivate(); ///TODO Working cooldowns in abilities
+        _engine->_entitylist[0]->_skillz["jump"].invoke();
+        _engine->_entitylist[0]->_skillz["jump"].deactivate(); ///TODO Working cooldowns in abilities
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        _default_player->_skillz["walk left"].invoke();
+        _engine->_entitylist[0]->_skillz["walk left"].invoke();
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        _default_player->_skillz["walk right"].invoke();
+        _engine->_entitylist[0]->_skillz["walk right"].invoke();
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
     {
-        //_default_player->_forces.push_back(Force(0, 2, 1));
-        //_default_player->_skillz["do nothing"].invoke();
+        _engine->_entitylist[0]->setMP(_engine->_entitylist[0]->getMP() + 1);
+        //_engine->_entitylist[0]->_forces.push_back(Force(0, 2, 1));
+        //_engine->_entitylist[0]->_skillz["do nothing"].invoke();
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+    {
+        _engine->_entitylist[1]->_skillz["jump"].invoke();
+        _engine->_entitylist[1]->_skillz["jump"].deactivate();
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    {
+        _engine->_entitylist[1]->_skillz["walk left"].invoke();
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+    {
+        _engine->_entitylist[1]->_skillz["walk right"].invoke();
     }
 }

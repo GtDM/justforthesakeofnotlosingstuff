@@ -1,12 +1,16 @@
 #include "level.hpp"
 
-Level::Level(std::string minimap_directory, int size_x, sf::Vector2f internal_size)
+Level::Level(std::string minimap_directory, int size_x, sf::Vector2f internal_size, PhysicsEngine* engine)
 {
     minimap.loadFromFile(minimap_directory);
     minimap_tex.loadFromImage(minimap);
     this->setTexture(minimap_tex, true);
     this->setPosition(size_x - this->getLocalBounds().width, 0); ///Minimap tied to view
     _size = internal_size;
+    auto lambda1 = [](PhysicsEngine* e){return (e->_entitylist[0]->getHP() < 0 ? true : false);};
+    auto lambda2 = [](PhysicsEngine* e){return (e->_entitylist[0]->getMP() > 1000 ? true : false);};
+    this->failureCondition = std::bind(lambda1, engine);
+    this->victoryCondition = std::bind(lambda2, engine);
 }
 
 Level::~Level()
@@ -41,4 +45,9 @@ void Level::constructVertexArrays(sf::RenderWindow* window) ///TODO needs improv
             }
         }
     }
+}
+
+void Level::changeObjective(std::function<bool(PhysicsEngine* engine)> lambda)
+{
+    this->victoryCondition = lambda;
 }

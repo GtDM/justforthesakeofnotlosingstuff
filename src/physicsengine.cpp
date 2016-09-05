@@ -52,44 +52,30 @@ void PhysicsEngine::processCollision(std::vector <Surface> surfaces, Entity* ent
             {
                 if(std::abs(intersection.top - entityBounds.top) < std::abs(y.getGlobalBounds().top - intersection.top))
                 {
-                    ///Entity pod
-                    entity->_skillz["jump"].deactivate();
-                    entity->_skillz["walk right"].activate();
-                    entity->_skillz["walk left"].activate();
-                    if(entity->finalVector.y < 0)
-                        entity->finalVector.y = 0;
-                    entity->setPosition(entity->getPosition().x, entity->getPosition().y + 0.25 * intersection.height);
+                    std::string b = y.getBehavior(top);
+                    if(b == "top_collision")
+                        topCollision(entity, intersection);
                 }
                 else
                 {
-                    ///Entity na
-                    entity->_skillz["jump"].activate();
-                    entity->_skillz["walk right"].activate();
-                    entity->_skillz["walk left"].activate();
-                    if(entity->finalVector.y > 0)
-                        entity->finalVector.y = 0;
-                    entity->setPosition(entity->getPosition().x, entity->getPosition().y - 0.25 * intersection.height);
+                    std::string b = y.getBehavior(down);
+                    if(b == "down_collision")
+                        downCollision(entity, intersection);
                 }
             }
             else
             {
                 if(std::abs(intersection.left - entityBounds.left) > std::abs(y.getGlobalBounds().left - intersection.left))
                 {
-                    ///Entity przed
-                    entity->_skillz["walk left"].activate();
-                    entity->_skillz["walk right"].deactivate();
-                    if(entity->finalVector.x > 0)
-                        entity->finalVector.x = 0;
-                    entity->setPosition(entity->getPosition().x - 0.25 * intersection.width, entity->getPosition().y);
+                    std::string b = y.getBehavior(right);
+                    if(b == "right_collision")
+                        rightCollision(entity, intersection);
                 }
                 else
                 {
-                    ///Entity za
-                    entity->_skillz["walk left"].deactivate();
-                    entity->_skillz["walk right"].activate();
-                    if(entity->finalVector.x < 0)
-                        entity->finalVector.x = 0;
-                    entity->setPosition(entity->getPosition().x + 0.25 * intersection.width, entity->getPosition().y);
+                    std::string b = y.getBehavior(left);
+                    if(b == "left_collision")
+                        leftCollision(entity, intersection);
                 }
             }
         }
@@ -100,4 +86,43 @@ void PhysicsEngine::processCollision(std::vector <Surface> surfaces, Entity* ent
         entity->_skillz["walk left"].activate();
     }
 
+}
+
+void PhysicsEngine::topCollision(Entity* entity, sf::FloatRect intersection) ///Collision relative to an entity
+{
+    ///Entity pod
+    entity->_skillz["jump"].deactivate();
+    entity->_skillz["walk right"].activate();
+    entity->_skillz["walk left"].activate();
+    if(entity->finalVector.y < 0)
+        entity->finalVector.y = 0;
+    entity->setPosition(entity->getPosition().x, entity->getPosition().y + 0.25 * intersection.height);
+}
+
+void PhysicsEngine::downCollision(Entity* entity, sf::FloatRect intersection)
+{
+    entity->_skillz["jump"].activate();
+    entity->_skillz["walk right"].activate();
+    entity->_skillz["walk left"].activate();
+    if(entity->finalVector.y > 0)
+        entity->finalVector.y = 0;
+    entity->setPosition(entity->getPosition().x, entity->getPosition().y - 0.25 * intersection.height);
+}
+
+void PhysicsEngine::leftCollision(Entity* entity, sf::FloatRect intersection)
+{
+    entity->_skillz["walk left"].deactivate();
+    entity->_skillz["walk right"].activate();
+    if(entity->finalVector.x < 0)
+        entity->finalVector.x = 0;
+    entity->setPosition(entity->getPosition().x + 0.25 * intersection.width, entity->getPosition().y);
+}
+
+void PhysicsEngine::rightCollision(Entity* entity, sf::FloatRect intersection)
+{
+    entity->_skillz["walk left"].activate();
+    entity->_skillz["walk right"].deactivate();
+    if(entity->finalVector.x > 0)
+        entity->finalVector.x = 0;
+    entity->setPosition(entity->getPosition().x - 0.25 * intersection.width, entity->getPosition().y);
 }

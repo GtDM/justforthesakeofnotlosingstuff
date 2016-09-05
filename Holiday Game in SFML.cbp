@@ -51,6 +51,7 @@
 			<Add library="sfml-audio" />
 		</Linker>
 		<Unit filename="include/ability.hpp" />
+		<Unit filename="include/argument_parser.hpp" />
 		<Unit filename="include/entity.hpp" />
 		<Unit filename="include/force.hpp" />
 		<Unit filename="include/game.hpp" />

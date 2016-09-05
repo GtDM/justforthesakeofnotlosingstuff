@@ -24,6 +24,10 @@ class PhysicsEngine
     protected:
     private:
         sf::Vector2i _size;
+        void downCollision(Entity* entity, sf::FloatRect intersection);
+        void topCollision(Entity* entity, sf::FloatRect intersection);
+        void leftCollision(Entity* entity, sf::FloatRect intersection);
+        void rightCollision(Entity* entity, sf::FloatRect intersection);
 };
 
 #endif // PHYSICSENGINE_HPP

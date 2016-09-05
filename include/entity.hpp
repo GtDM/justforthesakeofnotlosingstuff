@@ -21,14 +21,18 @@ class Entity: public sf::RectangleShape
         std::vector <Force> _forces; ///TODO a lot of things should be private
         AbilityMap _skillz;
         void learnSkills(AbilityMap skillset);
+        int getHP(){return _life;}
+        int getMP(){return _mana;}
+        void setHP(int value){_life = value;}
+        void setMP(int value){_mana = value;}
         sf::Vector2f finalVector;
         //void removeForce(std::iterator <Force> it);
         void addForce(Force force);
     protected:
     private:
         int _priority_number;
-        //int _life;
-        //int _mana;
+        int _life;
+        int _mana;
 };
 
 #endif // ENTITY_HPP

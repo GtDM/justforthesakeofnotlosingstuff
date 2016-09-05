@@ -18,6 +18,8 @@ Entity::Entity(PhysicsEngine* p, sf::Color c, int priority, sf::Vector2f positio
     _skillz.insert(AbilityInstance{"walk left", walk_left});
     _skillz.insert(AbilityInstance{"walk right", walk_right});
     _skillz.insert(AbilityInstance{"do nothing", nothing});
+    _life = 100;
+
 }
 
 Entity::Entity()

@@ -14,7 +14,7 @@
 class Game
 {
     public:
-        Game(Entity* player, Entity* npc, PhysicsEngine* engine, Level* level, int size_x, int size_y, std::string version);
+        Game(PhysicsEngine* engine, Level* level, int size_x, int size_y, std::string version);
         ~Game();
         bool isRunning(){return _state;}
         void draw();
@@ -29,9 +29,7 @@ class Game
         sf::Text frameRate; ///Stolen legally with author's permission
         sf::Font font;
         PhysicsEngine* _engine;
-        Entity* _default_player;
         Level* _level;
-        Entity* _npc;
         void handleKeyboard();
 };
 

@@ -17,13 +17,16 @@ class Surface: public sf::RectangleShape
         ~Surface();
         std::string getType(){return type;}
         void setType(std::string t);
-        void getBehavior(Side s); //TODO possibly delete that one
+        std::string getBehavior(Side s); //TODO possibly delete that one
         void setBehavior();
     protected:
 
     private:
         std::string type;
-        std::function <void(Side)> behavior;
+        std::string behaviorTop;
+        std::string behaviorDown;
+        std::string behaviorLeft;
+        std::string behaviorRight;
 };
 
 #endif // SURFACE_HPP
